@@ -3,7 +3,7 @@ import cartItems from './data';
 import { useGlobalContext } from './context';
 
 const CartContainer = () => {
-    const { cart } = useGlobalContext();
+    const { cart, clearCart, totalCost } = useGlobalContext();
     const cartArray = Array.from(cart.entries());
 
     if (cartArray.length === 0) {
@@ -26,8 +26,8 @@ const CartContainer = () => {
             {/* cart items */}
             <div>
                 {cartArray.map((cartItem) => {
-                    console.log(cartItem);
-                    return <CartItem key={cartItem[0]} {...cartItem[1]} />;
+                    const [id, item] = cartItem;
+                    return <CartItem key={id} {...item} />;
                 })}
             </div>
             {/* cart footer */}
@@ -35,13 +35,10 @@ const CartContainer = () => {
                 <hr />
                 <div>
                     <h5 className="cart-total">
-                        total <span>$10</span>
+                        total <span>${totalCost.toFixed(2)}</span>
                     </h5>
                 </div>
-                <button
-                    className="btn btn-hipster"
-                    onClick={() => console.log('clear cart')}
-                >
+                <button className="btn btn-hipster" onClick={clearCart}>
                     clear cart
                 </button>
             </footer>
